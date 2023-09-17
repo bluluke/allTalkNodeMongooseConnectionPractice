@@ -2,9 +2,13 @@
   "name": "alltalknodemongooseconnectionpractice",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "listen.js",
   "scripts": {
-    "devStart": "nodemon server.js"
+    "devStart": "nodemon server.js",
+    "start": "nodemon listen.js"
+  },
+  "engines": {
+    "node": "14.20.1"
   },
   "author": "Luke Ford",
   "license": "MIT",

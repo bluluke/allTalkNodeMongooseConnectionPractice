@@ -1,31 +1,32 @@
 const express = require('express');
-const expressWs = require('express-ws')(express()); //new
+// const expressWs = require('express-ws')(express()); //new
 const router = express.Router();
 const chat = require('../models/allTalkChats')
-const wss = expressWs.getWss(); //new
-const WebSocket = require("ws"); //new
+// const wss = expressWs.getWss(); //new
+// const WebSocket = require("ws"); //new
 
-const fs = require("fs"); //new
-const path = require("path") //new
+// const fs = require("fs"); //new
+// const path = require("path") //new
 
 router.get('/', async (req, res) => {
-    //new:
-    const indexPath = path.join(__dirname, 'index.html');
-    fs.readFile(indexPath, 'utf-8', (err, data) => {
-        if(err) {
-            console.error(err);
-            res.status(500).send('Internal Server Error');
-        } else {
-            res.send(data);
-        }
-    })
-    ////////////////
     try {
         const allTalkChats = await chat.find();
         res.json(allTalkChats);
     } catch (err) {
         res.status(500).json({ message: err.message })
     }
+    //new:
+    // const indexPath = path.join(__dirname, 'index.html');
+    // fs.readFile(indexPath, 'utf-8', (err, data) => {
+    //     if(err) {
+    //         console.error(err);
+    //         res.status(500).send('Internal Server Error');
+    //     } else {
+    //         res.send(data);
+    //     }
+    // })
+    ////////////////
+   
 })
 
 router.post('/', async (req, res) => {
