@@ -1,14 +1,14 @@
 require('dotenv').config()
 const express = require('express');
-const expressWs = require('express-ws')(express()); //new
+const expressWs = require('express-ws')(express()); 
 const mongoose = require('mongoose');
 const cors = require('cors');
-const WebSocket = require("ws"); //new
+const WebSocket = require("ws"); 
 
-const app = express();
-const wss = expressWs.getWss(); //new
-const fs = require("fs"); //new
-const path = require("path") //new
+const app = expressWs.app; //////////////////NEW
+const wss = expressWs.getWss(); 
+const fs = require("fs"); 
+const path = require("path") 
 
 mongoose.connect(process.env.DATABASE_URL)
 const db = mongoose.connection
@@ -25,5 +25,31 @@ app.use('/', router)
 // app.listen(9000, () => {
 //     console.log('Server started on port 9000')
 // })
+
+
+/////////////////////////////////////////////NEW
+app.ws('/websocket', (ws, req) => {
+    // Handle WebSocket connections here
+    console.log('WebSocket connected');
+    
+    ws.on('message', (message) => {
+      // Handle incoming WebSocket messages
+      console.log('Received message:', message);
+      
+      // Broadcast the message to all connected clients (you can modify this as needed)
+      wss.clients.forEach((client) => {
+        if (client !== ws && client.readyState === WebSocket.OPEN) {
+          client.send(message);
+        }
+      });
+    });
+  
+    ws.on('close', () => {
+      // Handle WebSocket disconnections
+      console.log('WebSocket disconnected');
+    });
+  });
+////////////////////////////////////
+///////////////////////////////////
 
 module.exports = app;
