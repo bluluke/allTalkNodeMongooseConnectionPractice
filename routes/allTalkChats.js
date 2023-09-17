@@ -29,6 +29,16 @@ router.get('/', async (req, res) => {
    
 })
 
+router.get('/chats/:id', async (req, res) => {
+    const {id} = req.params;
+    try {
+        const retrievedChat = await chat.findById(id);
+        res.json(retrievedChat);
+    } catch (err) {
+        res.status(500).json({ message: err.message })
+    }
+})
+
 router.post('/', async (req, res) => {
     const aChat = new chat({
         chatName: req.body.chatName,

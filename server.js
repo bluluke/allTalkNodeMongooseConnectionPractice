@@ -2,6 +2,7 @@ require('dotenv').config()
 const express = require('express');
 const expressWs = require('express-ws')(express()); //new
 const mongoose = require('mongoose');
+const cors = require('cors');
 const WebSocket = require("ws"); //new
 
 const app = express();
@@ -15,6 +16,7 @@ db.on('error', (error) => console.error(error));
 db.once('open', () => console.log('Connected to database'));
 
 app.use(express.json());
+app.use(cors());
 // app.use(express.static(__dirname));
 
 const router = require('./routes/allTalkChats')
