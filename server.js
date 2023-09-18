@@ -31,7 +31,6 @@ app.use('/', router)
 app.ws('/websocket', (ws, req) => {
     // Handle WebSocket connections here
     console.log('WebSocket connected');
-    
     ws.on('message', (message) => {
       // Handle incoming WebSocket messages
       console.log('Received message:', message);
